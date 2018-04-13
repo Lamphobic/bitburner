@@ -1,19 +1,19 @@
 scriptsToCopy = ['hack-scheduler.script', 'grow-scheduler.script', 'weaken-target.script', 'grow-target.script', 'hack-target.script', 'start.script', 'daemon.script', 'spider.script'];
-
+costPerGB = 55000;
 ramToBuy = 64;
 if (serverExists('pserv-0')) {
   ramToBuy = Math.max(ramToBuy, getServerRam('pserv-0')[0]);
 }
 
-if ((getServerMoneyAvailable('home') > 50000 * ramToBuy)) {
+if ((getServerMoneyAvailable('home') > costPerGB * ramToBuy)) {
   ramToBuy *= 2;
 
-  while (getServerMoneyAvailable('home') > 50000 * ramToBuy) {
+  while (getServerMoneyAvailable('home') > costPerGB * ramToBuy) {
     ramToBuy *= 2;
   }
   ramToBuy /= 2;
 }
-print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + 50000 * ramToBuy + '$');
+print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + costPerGB * ramToBuy + '$');
 
 i = 0;
 doLoop = true;
@@ -23,22 +23,22 @@ while (doLoop) {
       ramToBuy = Math.max(ramToBuy, getServerRam('pserv-0')[0] * 4);
     }
 
-    if ((getServerMoneyAvailable('home') > 50000 * ramToBuy)) {
+    if ((getServerMoneyAvailable('home') > costPerGB * ramToBuy)) {
       ramToBuy *= 4;
 
-      while (getServerMoneyAvailable('home') > 50000 * ramToBuy) {
+      while (getServerMoneyAvailable('home') > costPerGB * ramToBuy) {
         ramToBuy *= 4;
       }
 
       ramToBuy /= 4;
     }
 
-    print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + 50000 * ramToBuy + '$');
+    print('Buying player servers. Target: ' + ramToBuy + ' GB RAM for ' + costPerGB * ramToBuy + '$');
     i = 0;
     sleep(600 * 1000, false);
   } else {
     if (!serverExists('pserv-' + i) || getServerRam('pserv-' + i)[0] < ramToBuy) {
-      if (getServerMoneyAvailable('home') > 50000 * ramToBuy) {
+      if (getServerMoneyAvailable('home') > costPerGB * ramToBuy) {
         if (serverExists('pserv-' + i)) {
           killall('pserv-' + i);
           sleep(20 * 1000, false);
